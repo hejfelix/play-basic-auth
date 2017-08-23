@@ -1,2 +1,8 @@
 *.class
 *.log
+.idea/
+
+play-basic-auth\.iml
+project/target/
+project/project/
+target/
