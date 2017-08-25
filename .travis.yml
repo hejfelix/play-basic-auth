@@ -13,4 +13,4 @@ script:
   - sbt -J-Xmx6144m ++$TRAVIS_SCALA_VERSION $COMMAND
 
 after_success:
-  - ./project/publish
+  - sbt release

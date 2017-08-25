@@ -67,3 +67,6 @@ lazy val root = (project in file(".")).settings(
     scalaTest % Test
   )
 )
+
+addCommandAlias("ci-all",  ";+clean ;+compile ;+test ;+package")
+addCommandAlias("release", ";+publishSigned ;sonatypeReleaseAll")
