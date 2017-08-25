@@ -58,7 +58,7 @@ lazy val root = (project in file(".")).settings(
     List(
       organization := "com.lambdaminute",
       scalaVersion := "2.12.3",
-      version := "0.1.0-SNAPSHOT"
+      version := s"0.1.${sys.env.getOrElse("TRAVIS_BUILD_NUMBER", "0-SNAPSHOT")}"
     )),
   name := "play-basic-auth",
   libraryDependencies ++= Seq(
@@ -69,4 +69,4 @@ lazy val root = (project in file(".")).settings(
 )
 
 addCommandAlias("ci-all",  ";+clean ;+compile ;+test ;+package")
-addCommandAlias("release", ";+publishSigned ;sonatypeReleaseAll")
+addCommandAlias("release", ";+publishSigned ;sonatypeRelease")
