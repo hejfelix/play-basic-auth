@@ -5,7 +5,11 @@ import Dependencies._
   * BEGIN SONATYPE SECTION
   */
 
-useGpg := true
+useGpg := false
+usePgpKeyHex("0B9B31F352846295")
+pgpPublicRing := baseDirectory.value / "project" / ".gnupg" / "pubring.gpg"
+pgpSecretRing := baseDirectory.value / "project" / ".gnupg" / "secring.gpg"
+pgpPassphrase := sys.env.get("PGP_PASS").map(_.toArray)
 
 val sonatypeUser     = sys.env.getOrElse("SONATYPE_USER", "NO_USER_SPECIFIED")
 val sonatypePassword = sys.env.getOrElse("SONATYPE_PASSWORD", "NO_PASSWORD_SPECIFIED")
@@ -25,7 +29,7 @@ publishTo := {
 
 publishArtifact in Test := false
 
-licenses := Seq("BSD-style" -> url("http://www.opensource.org/licenses/bsd-license.php"))
+licenses := Seq("MIT" -> url("https://opensource.org/licenses/MIT"))
 
 homepage := Some(url("http://example.com"))
 
