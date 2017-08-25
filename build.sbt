@@ -31,7 +31,7 @@ publishArtifact in Test := false
 
 licenses := Seq("MIT" -> url("https://opensource.org/licenses/MIT"))
 
-homepage := Some(url("http://example.com"))
+homepage := Some(url("https://github.com/hejfelix/play-basic-auth"))
 
 scmInfo := Some(
   ScmInfo(
