@@ -11,8 +11,18 @@
 
 # A basic auth filter for play
 
+## Dependencies
 
-## usage:
+For now, this library is only built with `scala2.12.x` and `play2.6.x`. Pull requests are welcome.
+
+## Usage:
+
+Add the latest version to your dependencies in `build.sbt`, replacing `x.x.x` with the newest version from [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.lambdaminute/play-basic-auth_2.12/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.lambdaminute/play-basic-auth_2.12)
+
+```
+libraryDependencies += "com.lambdaminute" %% "play-basic-auth" % "x.x.x"
+```
+
 ```scala
 //MyApplicationLoader.scala
 package controllers
@@ -47,3 +57,7 @@ class MyComponents(context: Context)
 //application.conf
 play.application.loader=controllers.MyApplicationLoader
 ```
+
+## More examples
+
+Please refer to [the tests](src/test/scala/com/lambdaminute/playbasicauth/BasicAuthFilterSpec.scala)
