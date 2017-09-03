@@ -23,8 +23,10 @@ class BasicAuthFilterSpec extends FlatSpec with Matchers {
 
   implicit val actorSystem  = ActorSystem()
   implicit val materializer = ActorMaterializer()
-  val filter =
-    new BasicAuthFilter(List(User(username, password)), realm)
+  private val freeRoutes    = List("/status")
+  private val users         = List(User(username, password))
+  val config                = BasicAuthFilterConfig(users, realm, freeRoutes)
+  val filter                = new BasicAuthFilter(config)
 
   val requestHeader: RequestHeader = createRequestHeaders(username, password)
 

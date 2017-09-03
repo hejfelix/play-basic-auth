@@ -9,29 +9,21 @@ import play.api.mvc.{Filter, RequestHeader, Result}
 
 import scala.concurrent.Future
 
-case class User(name: String, password: String) {
-  def toColonSeparatedString = s"$name:$password"
-}
-
-class BasicAuthFilter(userCredentials: List[User], realm: String)(
-    implicit val mat: Materializer)
-    extends Filter {
+class BasicAuthFilter(conf: BasicAuthFilterConfig)(implicit val mat: Materializer) extends Filter {
 
   private val users =
-    userCredentials.map(_.toColonSeparatedString).map(base64Encode)
+    conf.userCredentials.map(_.toColonSeparatedString).map(base64Encode)
 
   private val unauthorized = Future.successful {
-    Unauthorized("Unauthorized").withHeaders(
-      "WWW-Authenticate" -> s"""Basic realm="${realm}"""")
+    Unauthorized("Unauthorized").withHeaders("WWW-Authenticate" -> s"""Basic realm="${conf.realm}"""")
   }
 
-  def apply(nextFilter: RequestHeader => Future[Result])(
-      requestHeader: RequestHeader): Future[Result] =
+  def apply(nextFilter: RequestHeader => Future[Result])(requestHeader: RequestHeader): Future[Result] =
     requestHeader.headers.get("Authorization") match {
       case Some(authHeader) if validUser(users, authHeader) =>
         nextFilter(requestHeader)
-      case _ if requestHeader.path == "/status" => nextFilter(requestHeader)
-      case _                                    => unauthorized
+      case _ if conf.freePaths.contains(requestHeader.path) => nextFilter(requestHeader)
+      case _                                                => unauthorized
     }
 
   private def validUser(users: List[String], authHeader: String) =
